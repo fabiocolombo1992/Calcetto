@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#183d35">
+<title>Avanzamento raccolta fondi</title>
+<style>
+:root{--green:#183d35;--accent:#368563;--ink:#20312b;--muted:#65736d;--paper:#f4f7f4;--line:#e2e9e4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
+.wrap{width:min(100% - 28px,680px);margin:28px auto}
+.hero{background:var(--green);color:#fff;padding:32px 26px;border-radius:22px 22px 0 0}
+.eyebrow{font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;color:#bde5cd;font-weight:750}
+h1{font-size:clamp(1.8rem,6vw,2.6rem);line-height:1.1;margin:12px 0}
+.intro{color:#e0ece5;margin:0;max-width:48ch}
+main{background:#fff;padding:26px;border-radius:0 0 22px 22px;box-shadow:0 12px 36px #173d3510}
+.label{color:var(--muted);font-size:.78rem;font-weight:750;letter-spacing:.08em}
+.amount{font-size:clamp(2.6rem,10vw,4rem);line-height:1.05;letter-spacing:-.045em;font-weight:800;color:var(--accent);margin:7px 0}
+.goal{color:var(--muted);margin:8px 0 20px}
+.track{height:14px;background:#e5ebe7;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .3s}
+.stats{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.percent{font-weight:800;color:var(--accent)}
+.remaining{font-size:.9rem;color:var(--muted)}
+.note{border-top:1px solid var(--line);margin-top:24px;padding-top:18px;color:var(--muted);font-size:.9rem}
+footer{text-align:center;color:var(--muted);font-size:.78rem;padding:18px 12px}
+@media(max-width:420px){.wrap{margin:14px auto}.hero,main{padding:23px 20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow" id="eyebrow">Un progetto, un obiettivo</div>
+    <h1 id="title">Insieme possiamo farcela</h1>
+    <p class="intro" id="intro">Ogni contributo ci avvicina al traguardo. Qui puoi seguire l'avanzamento della raccolta fondi.</p>
+  </header>
+  <main>
+    <div class="label">TOTALE RACCOLTO</div>
+    <div class="amount" id="raised">0 €</div>
+    <div class="goal" id="goal">Obiettivo: 0 €</div>
+    <div class="track" role="progressbar" aria-label="Avanzamento della raccolta" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress">
+      <div class="fill" id="fill"></div>
+    </div>
+    <div class="stats">
+      <span class="percent" id="percent">0% raggiunto</span>
+      <span class="remaining" id="remaining">Mancano 0 € al traguardo</span>
+    </div>
+    <div class="note" id="note">Grazie a tutte le persone che stanno contribuendo a questo progetto.</div>
+  </main>
+  <footer>Pagina informativa della raccolta fondi</footer>
+</div>
+<script>
+/* MODIFICA SOLO I VALORI QUI SOTTO QUANDO VUOI AGGIORNARE LA PAGINA */
+const raccolta = {
+  titolo: "Insieme possiamo farcela",
+  etichetta: "Un progetto, un obiettivo",
+  descrizione: "Ogni contributo ci avvicina al traguardo. Qui puoi seguire l'avanzamento della raccolta fondi.",
+  raccolto: 0,
+  obiettivo: 5000,
+  messaggio: "Grazie a tutte le persone che stanno contribuendo a questo progetto."
+};
+const euro = n => new Intl.NumberFormat("it-IT", {style:"currency",currency:"EUR",maximumFractionDigits:0}).format(n);
+const pct = raccolta.obiettivo > 0 ? Math.min(100, Math.max(0, raccolta.raccolto / raccolta.obiettivo * 100)) : 0;
+document.title = raccolta.titolo + " — Raccolta fondi";
+document.getElementById("title").textContent = raccolta.titolo;
+document.getElementById("eyebrow").textContent = raccolta.etichetta;
+document.getElementById("intro").textContent = raccolta.descrizione;
+document.getElementById("raised").textContent = euro(raccolta.raccolto);
+document.getElementById("goal").textContent = "Obiettivo: " + euro(raccolta.obiettivo);
+document.getElementById("fill").style.width = pct + "%";
+document.getElementById("percent").textContent = Math.round(pct) + "% raggiunto";
+document.getElementById("remaining").textContent = raccolta.raccolto >= raccolta.obiettivo ? "Obiettivo raggiunto!" : "Mancano " + euro(Math.max(0, raccolta.obiettivo-raccolta.raccolto)) + " al traguardo";
+document.getElementById("progress").setAttribute("aria-valuenow", String(Math.round(pct)));
+document.getElementById("note").textContent = raccolta.messaggio;
+</script>
+</body>
+</html>
