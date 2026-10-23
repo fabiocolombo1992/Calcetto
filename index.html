@@ -87,7 +87,7 @@ document.title = raccolta.titolo + " — Raccolta fondi";
 document.getElementById("eyebrow").textContent = raccolta.etichetta;
 document.getElementById("title").textContent = raccolta.titolo;
 document.getElementById("intro").textContent = raccolta.descrizione;
-/*document.getElementById("note").innerHTML = "<strong>Facciamo squadra anche fuori dal campo.</strong> " + raccolta.messaggio;*/
+document.getElementById("note").innerHTML = "<strong>È già stato richiesto l'acquisto di un nuovo calcetto. L'idea è di restaurare anche il vecchio per poterne avere due e avere più possibilità di giocare nel poco tempo a disposizione durante le pause. Con 10€ a testa dovremmo facilmente raggiungere la cifra necessaria per il ripristino.</strong> "/* + raccolta.messaggio*/;
 const root = document.getElementById("phases");
 let totalRaised=0,totalGoal=0;
 raccolta.fasi.forEach((fase,index)=>{
